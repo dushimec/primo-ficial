@@ -17,7 +17,7 @@ export function Footer() {
             priority
           />
           <span className="mt-2 text-base font-semibold">
-            Primo <span className="text-orange-400">Ficial</span> Partners
+            Primo <span className="text-orange-400">Fiscal</span> Partners
           </span>
         </Link>
 

@@ -67,7 +67,7 @@ export function Navbar() {
               priority
             />
             <span className="ml-2 font-semibold text-white text-sm sm:text-base">
-              Primo <span className="text-orange-400">Ficial</span>
+              Primo <span className="text-orange-400">Fiscal</span>
             </span>
           </Link>
         </div>
@@ -121,7 +121,7 @@ export function Navbar() {
               priority
             />
             <span className="text-xl font-semibold">
-              Primo <span className="text-orange-400">Ficial</span> Partners
+              Primo <span className="text-orange-400">Fiscal</span> Partners
             </span>
           </div>
 
