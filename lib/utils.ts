@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const siteConfig = {
-  name: "Primo Ficial Partners",
+  name: "Primo Fiscal Partners",
   description:
     "Your trusted partner in financial excellence, providing comprehensive accounting, tax, and advisory services to help your business thrive.",
   url: "https://primoficialpartners.com",
@@ -14,7 +14,7 @@ export const siteConfig = {
   links: {
     twitter: "https://twitter.com/primoficial",
     facebook: "https://facebook.com/primoficialpartners",
-    linkedin: "https://linkedin.com/company/primo-ficial-partners",
+    linkedin: "https://linkedin.com/company/primo-fiscal-partners",
   },
   keywords: [
     "accounting services",

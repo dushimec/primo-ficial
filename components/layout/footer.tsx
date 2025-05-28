@@ -13,7 +13,7 @@ export function Footer() {
             alt={`${siteConfig.name} Logo`}
             width={64}
             height={64}
-            className="rounded-md bg-white p-1"
+            className=" p-1"
             priority
           />
           <span className="mt-2 text-base font-semibold">
@@ -27,7 +27,7 @@ export function Footer() {
             <p className="text-center sm:text-left md:text-center text-sm">
               YYussa City Center
               <br />
-              (Former Makuza Pease
+              (Former Makuza Peace
               <br />
               Plazza)
               <br />
@@ -40,13 +40,13 @@ export function Footer() {
             <p className="text-center text-sm">
               +252 789 877 775
               <br />
-              +252 789 500 455
+              +252 788 595 456
             </p>
           </div>
 
           <div className="flex flex-col items-center sm:items-end md:items-center">
             <h3 className="font-medium mb-2">Email</h3>
-            <p className="text-center sm:text-right md:text-center text-sm">primoficial.partner@gmail.com</p>
+            <p className="text-center sm:text-right md:text-center text-sm">primoficialpartners@gmail.com</p>
           </div>
         </div>
 

@@ -23,7 +23,7 @@ interface FormStatus {
   message: string
 }
 
-export function InternshipForm() {
+export function TrainingForm() {
   const [formData, setFormData] = useState<FormState>({
     fullName: "",
     email: "",
@@ -68,7 +68,7 @@ export function InternshipForm() {
     })
 
     try {
-      const response = await fetch("/api/internship", {
+      const response = await fetch("/api/training", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -186,7 +186,7 @@ export function InternshipForm() {
             label="Motivation Letter"
             id="motivationLetter"
             name="motivationLetter"
-            placeholder="Tell us why you want to join our internship program"
+            placeholder="Tell us why you want to join our training program"
             value={formData.motivationLetter}
             onChange={handleChange}
             required
@@ -197,7 +197,7 @@ export function InternshipForm() {
             variant="primary"
             fullWidth
             className={status.type === "loading" ? "opacity-70 cursor-not-allowed" : ""}
-            onClick={status.type === "loading" ? (e) => e.preventDefault() : undefined}
+            onClick={status.type === "loading" ? () => {} : undefined}
           >
             {status.type === "loading" ? "Submitting..." : "Submit Application"}
           </Button>

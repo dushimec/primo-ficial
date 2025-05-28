@@ -3,6 +3,7 @@ import { HeroSection } from "@/components/sections/hero-section"
 import { ServicesSection } from "@/components/sections/services-section"
 import { StatsSection } from "@/components/sections/stats-section"
 import { siteConfig } from "@/lib/utils"
+// import Slider from "@/components/slide/SlideSection"
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="bg-[#1e1b2e] text-white">
+      {/* <Slider /> */}
       <HeroSection />
       <ServicesSection />
       <StatsSection />

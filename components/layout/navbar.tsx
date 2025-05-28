@@ -63,7 +63,7 @@ export function Navbar() {
               alt={`${siteConfig.name} Logo`}
               width={48}
               height={48}
-              className="rounded-md bg-white p-1"
+              className=" p-1"
               priority
             />
             <span className="ml-2 font-semibold text-white text-sm sm:text-base">
@@ -83,8 +83,8 @@ export function Navbar() {
           <Link href="/services" className="text-white hover:text-orange-400 transition-colors duration-300">
             Services
           </Link>
-          <Link href="/internship" className="text-white hover:text-orange-400 transition-colors duration-300">
-            Internship
+          <Link href="/training" className="text-white hover:text-orange-400 transition-colors duration-300">
+            Training
           </Link>
           <Link href="/contact" className="text-white hover:text-orange-400 transition-colors duration-300">
             Contact
@@ -117,7 +117,7 @@ export function Navbar() {
               alt={`${siteConfig.name} Logo`}
               width={64}
               height={64}
-              className="rounded-md bg-white p-1 mb-2"
+              className=" p-1 mb-2"
               priority
             />
             <span className="text-xl font-semibold">
@@ -147,11 +147,11 @@ export function Navbar() {
             Services
           </Link>
           <Link
-            href="/internship"
+            href="/training"
             className="w-full text-white hover:text-orange-400 py-3 px-4 rounded-md hover:bg-[#252338] transition-colors duration-200 text-center"
             onClick={() => setIsMenuOpen(false)}
           >
-            Internship
+            training
           </Link>
           <Link
             href="/contact"

@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card"
 
-export function InternshipDetails() {
+export function TrainingDetails() {
   return (
     <Card>
       <h2 className="text-xl font-semibold mb-4">Program Overview</h2>

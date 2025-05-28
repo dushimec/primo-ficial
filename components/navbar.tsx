@@ -117,7 +117,7 @@ export default function Navbar() {
               alt={`${siteConfig.name} Logo`}
               width={64}
               height={64}
-              className="rounded-md bg-white p-1 mb-2"
+             
               priority
             />
             <span className="text-xl font-semibold">
