@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Facebook, Twitter, Linkedin } from "lucide-react"
+import { Facebook, Twitter, Linkedin, InstagramIcon } from "lucide-react"
 import { siteConfig } from "@/lib/utils"
 
 export function Footer() {
@@ -64,11 +64,11 @@ export function Footer() {
             <Twitter size={18} />
           </Link>
           <Link
-            href="#"
-            aria-label="LinkedIn"
+            href="https://www.instagram.com/primo_fiscal?igsh=cHBzOGt3b3JrNDNm"
+            aria-label="Instagram"
             className="text-white hover:text-orange-400 transition-colors duration-300"
           >
-            <Linkedin size={18} />
+            <InstagramIcon size={18} />
           </Link>
         </div>
 
