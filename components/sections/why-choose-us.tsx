@@ -29,7 +29,7 @@ export function WhyChooseUs() {
           <div>
             <h3 className="font-semibold mb-2">Tailored Solutions</h3>
             <p className="text-sm text-gray-300">
-              Bespoke advice specific to your circumstances—not generic answers.
+              Bespoke advice specific to your circumstances not generic answers.
             </p>
           </div>
         </AnimatedSection>
