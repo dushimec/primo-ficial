@@ -31,22 +31,20 @@ export function Footer() {
               <br />
               Plazza)
               <br />
-              F2-37
+              F3-37
             </p>
           </div>
 
           <div className="flex flex-col items-center">
             <h3 className="font-medium mb-2">Contact</h3>
             <p className="text-center text-sm">
-              +252 789 877 775
-              <br />
-              +252 788 595 456
+               +250 788 877 775
             </p>
           </div>
 
           <div className="flex flex-col items-center sm:items-end md:items-center">
             <h3 className="font-medium mb-2">Email</h3>
-            <p className="text-center sm:text-right md:text-center text-sm">primoficialpartners@gmail.com</p>
+            <p className="text-center sm:text-right md:text-center text-sm">primofiscalpartners@gmail.com</p>
           </div>
         </div>
 

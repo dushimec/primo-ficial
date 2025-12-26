@@ -17,7 +17,7 @@ export default function Footer() {
             priority
           />
           <span className="mt-2 text-base font-semibold">
-            Primo <span className="text-orange-400">Ficial</span> Partners
+            Primo <span className="text-orange-400">Fiscal</span> Partners
           </span>
         </Link>
 
@@ -31,22 +31,20 @@ export default function Footer() {
               <br />
               Plazza)
               <br />
-              F2-37
+              F3-37
             </p>
           </div>
 
           <div className="flex flex-col items-center">
             <h3 className="font-medium mb-2">Contact</h3>
             <p className="text-center text-sm">
-              +252 789 877 775
-              <br />
-              +252 789 500 455
+               +250 788 877 775
             </p>
           </div>
 
           <div className="flex flex-col items-center sm:items-end md:items-center">
             <h3 className="font-medium mb-2">Email</h3>
-            <p className="text-center sm:text-right md:text-center text-sm">primoficial.partner@gmail.com</p>
+            <p className="text-center sm:text-right md:text-center text-sm">primofiscalpartners@gmail.com</p>
           </div>
         </div>
 

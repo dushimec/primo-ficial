@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Trash2, Edit, Eye, Check, Loader2 } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 
-interface InternshipApplication {
+interface TrainingApplication {
   _id: string
   fullName: string
   email: string
@@ -21,97 +21,97 @@ interface InternshipApplication {
   status?: "pending" | "approved" | "rejected"
 }
 
-interface InternshipsTableProps {
+interface TrainingsTableProps {
   onNotification: (type: "success" | "error", message: string) => void
 }
 
-export function InternshipsTable({ onNotification }: InternshipsTableProps) {
-  const [internships, setInternships] = useState<InternshipApplication[]>([])
+export function TrainingsTable({ onNotification }: TrainingsTableProps) {
+  const [trainings, setTrainings] = useState<TrainingApplication[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
-  const [viewInternship, setViewInternship] = useState<InternshipApplication | null>(null)
-  const [editInternship, setEditInternship] = useState<InternshipApplication | null>(null)
-  const [deleteInternship, setDeleteInternship] = useState<InternshipApplication | null>(null)
+  const [viewTraining, setViewTraining] = useState<TrainingApplication | null>(null)
+  const [editTraining, setEditTraining] = useState<TrainingApplication | null>(null)
+  const [deleteTraining, setDeleteTraining] = useState<TrainingApplication | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  // Fetch internships
+  // Fetch trainings
   useEffect(() => {
-    fetchInternships()
+    fetchTrainings()
   }, [])
 
-  const fetchInternships = async () => {
+  const fetchTrainings = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/internship")
+      const response = await fetch("/api/training")
       const result = await response.json()
 
       if (result.success) {
-        setInternships(result.data)
+        setTrainings(result.data)
       } else {
-        setError(result.message || "Failed to fetch internship applications")
+        setError(result.message || "Failed to fetch training applications")
       }
     } catch (error) {
-      setError("An error occurred while fetching internship applications")
-      console.error("Error fetching internships:", error)
+      setError("An error occurred while fetching training applications")
+      console.error("Error fetching trainings:", error)
     } finally {
       setLoading(false)
     }
   }
 
-  // Handle edit internship
+  // Handle edit training
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!editInternship) return
+    if (!editTraining) return
 
     try {
       setIsSubmitting(true)
-      const response = await fetch(`/api/internship/${editInternship._id}`, {
+      const response = await fetch(`/api/training/${editTraining._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(editInternship),
+        body: JSON.stringify(editTraining),
       })
 
       const result = await response.json()
 
       if (result.success) {
-        onNotification("success", "Internship application updated successfully")
-        setEditInternship(null)
-        fetchInternships()
+        onNotification("success", "Training application updated successfully")
+        setEditTraining(null)
+        fetchTrainings()
       } else {
-        onNotification("error", result.message || "Failed to update internship application")
+        onNotification("error", result.message || "Failed to update training application")
       }
     } catch (error) {
-      onNotification("error", "An error occurred while updating the internship application")
-      console.error("Error updating internship:", error)
+      onNotification("error", "An error occurred while updating the training application")
+      console.error("Error updating training:", error)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // Handle delete internship
+  // Handle delete training
   const handleDeleteConfirm = async () => {
-    if (!deleteInternship) return
+    if (!deleteTraining) return
 
     try {
       setIsSubmitting(true)
-      const response = await fetch(`/api/internship/${deleteInternship._id}`, {
+      const response = await fetch(`/api/training/${deleteTraining._id}`, {
         method: "DELETE",
       })
 
       const result = await response.json()
 
       if (result.success) {
-        onNotification("success", "Internship application deleted successfully")
-        setDeleteInternship(null)
-        fetchInternships()
+        onNotification("success", "Training application deleted successfully")
+        setDeleteTraining(null)
+        fetchTrainings()
       } else {
-        onNotification("error", result.message || "Failed to delete internship application")
+        onNotification("error", result.message || "Failed to delete training application")
       }
     } catch (error) {
-      onNotification("error", "An error occurred while deleting the internship application")
-      console.error("Error deleting internship:", error)
+      onNotification("error", "An error occurred while deleting the training application")
+      console.error("Error deleting training:", error)
     } finally {
       setIsSubmitting(false)
     }
@@ -120,7 +120,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
   // Handle status change
   const handleStatusChange = async (id: string, status: "pending" | "approved" | "rejected") => {
     try {
-      const response = await fetch(`/api/internship/${id}/status`, {
+      const response = await fetch(`/api/training/${id}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +132,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
 
       if (result.success) {
         onNotification("success", `Application ${status} successfully`)
-        fetchInternships()
+        fetchTrainings()
       } else {
         onNotification("error", result.message || "Failed to update application status")
       }
@@ -161,7 +161,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
     return (
       <div className="flex justify-center items-center py-8">
         <Loader2 className="animate-spin mr-2" size={20} />
-        <span>Loading internship applications...</span>
+        <span>Loading training applications...</span>
       </div>
     )
   }
@@ -170,8 +170,8 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
     return <div className="text-red-400 py-4">{error}</div>
   }
 
-  if (internships.length === 0) {
-    return <div className="py-4">No internship applications found.</div>
+  if (trainings.length === 0) {
+    return <div className="py-4">No training applications found.</div>
   }
 
   return (
@@ -189,7 +189,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
             </tr>
           </thead>
           <tbody>
-            {internships.map((internship) => (
+            {trainings.map((internship) => (
               <tr key={internship._id} className="border-b border-gray-700 hover:bg-[#252338]">
                 <td className="py-2 px-4">{formatDate(internship.createdAt)}</td>
                 <td className="py-2 px-4">{internship.fullName}</td>
@@ -202,7 +202,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
                       variant="secondary"
                       size="sm"
                       className="p-1 h-8 w-8"
-                      onClick={() => setViewInternship(internship)}
+                      onClick={() => setViewTraining(internship)}
                     >
                       <Eye size={16} />
                     </Button>
@@ -210,7 +210,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
                       variant="secondary"
                       size="sm"
                       className="p-1 h-8 w-8"
-                      onClick={() => setEditInternship(internship)}
+                      onClick={() => setEditTraining(internship)}
                     >
                       <Edit size={16} />
                     </Button>
@@ -218,7 +218,7 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
                       variant="secondary"
                       size="sm"
                       className="p-1 h-8 w-8 hover:bg-red-500/20"
-                      onClick={() => setDeleteInternship(internship)}
+                      onClick={() => setDeleteTraining(internship)}
                     >
                       <Trash2 size={16} />
                     </Button>
@@ -230,25 +230,25 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
         </table>
       </div>
 
-      {/* View Internship Dialog */}
-      <Dialog open={!!viewInternship} onOpenChange={(open) => !open && setViewInternship(null)}>
+      {/* View Training Dialog */}
+      <Dialog open={!!viewTraining} onOpenChange={(open) => !open && setViewTraining(null)}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>Internship Application Details</DialogTitle>
+            <DialogTitle>Training Application Details</DialogTitle>
           </DialogHeader>
-          {viewInternship && (
+          {viewTraining && (
             <div className="space-y-4 py-4">
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">Status</h3>
-                  <div className="mt-1">{getStatusBadge(viewInternship.status)}</div>
+                  <div className="mt-1">{getStatusBadge(viewTraining.status)}</div>
                 </div>
                 <div className="flex space-x-2">
                   <Button
                     size="sm"
                     variant="secondary"
                     className="bg-green-500/20 hover:bg-green-500/30"
-                    onClick={() => handleStatusChange(viewInternship._id, "approved")}
+                    onClick={() => handleStatusChange(viewTraining._id, "approved")}
                   >
                     Approve
                   </Button>
@@ -256,14 +256,14 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
                     size="sm"
                     variant="secondary"
                     className="bg-red-500/20 hover:bg-red-500/30"
-                    onClick={() => handleStatusChange(viewInternship._id, "rejected")}
+                    onClick={() => handleStatusChange(viewTraining._id, "rejected")}
                   >
                     Reject
                   </Button>
                   <Button
                     size="sm"
                     variant="secondary"
-                    onClick={() => handleStatusChange(viewInternship._id, "pending")}
+                    onClick={() => handleStatusChange(viewTraining._id, "pending")}
                   >
                     Mark Pending
                   </Button>
@@ -272,82 +272,82 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">Date</h3>
-                  <p>{formatDate(viewInternship.createdAt)}</p>
+                  <p>{formatDate(viewTraining.createdAt)}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">Full Name</h3>
-                  <p>{viewInternship.fullName}</p>
+                  <p>{viewTraining.fullName}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">Email</h3>
-                  <p>{viewInternship.email}</p>
+                  <p>{viewTraining.email}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">Phone</h3>
-                  <p>{viewInternship.phone || "N/A"}</p>
+                  <p>{viewTraining.phone || "N/A"}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">University</h3>
-                  <p>{viewInternship.university}</p>
+                  <p>{viewTraining.university}</p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-gray-400">Field of Study</h3>
-                  <p>{viewInternship.fieldOfStudy}</p>
+                  <p>{viewTraining.fieldOfStudy}</p>
                 </div>
               </div>
               <div>
                 <h3 className="text-sm font-medium text-gray-400">Motivation Letter</h3>
                 <p className="bg-[#252338] p-3 rounded-md mt-1 whitespace-pre-wrap">
-                  {viewInternship.motivationLetter}
+                  {viewTraining.motivationLetter}
                 </p>
               </div>
             </div>
           )}
           <DialogFooter>
-            <Button variant="secondary" onClick={() => setViewInternship(null)}>
+            <Button variant="secondary" onClick={() => setViewTraining(null)}>
               Close
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Edit Internship Dialog */}
-      <Dialog open={!!editInternship} onOpenChange={(open) => !open && setEditInternship(null)}>
+      {/* Edit Training Dialog */}
+      <Dialog open={!!editTraining} onOpenChange={(open) => !open && setEditTraining(null)}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>Edit Internship Application</DialogTitle>
+            <DialogTitle>Edit Training Application</DialogTitle>
           </DialogHeader>
-          {editInternship && (
+          {editTraining && (
             <form onSubmit={handleEditSubmit} className="space-y-4 py-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   label="Full Name"
-                  value={editInternship.fullName}
-                  onChange={(e) => setEditInternship({ ...editInternship, fullName: e.target.value })}
+                  value={editTraining.fullName}
+                  onChange={(e) => setEditTraining({ ...editTraining, fullName: e.target.value })}
                   required
                 />
                 <Input
                   label="Email"
                   type="email"
-                  value={editInternship.email}
-                  onChange={(e) => setEditInternship({ ...editInternship, email: e.target.value })}
+                  value={editTraining.email}
+                  onChange={(e) => setEditTraining({ ...editTraining, email: e.target.value })}
                   required
                 />
                 <Input
                   label="Phone"
-                  value={editInternship.phone}
-                  onChange={(e) => setEditInternship({ ...editInternship, phone: e.target.value })}
+                  value={editTraining.phone}
+                  onChange={(e) => setEditTraining({ ...editTraining, phone: e.target.value })}
                 />
                 <Input
                   label="University"
-                  value={editInternship.university}
-                  onChange={(e) => setEditInternship({ ...editInternship, university: e.target.value })}
+                  value={editTraining.university}
+                  onChange={(e) => setEditTraining({ ...editTraining, university: e.target.value })}
                   required
                 />
                 <Input
                   label="Field of Study"
-                  value={editInternship.fieldOfStudy}
-                  onChange={(e) => setEditInternship({ ...editInternship, fieldOfStudy: e.target.value })}
+                  value={editTraining.fieldOfStudy}
+                  onChange={(e) => setEditTraining({ ...editTraining, fieldOfStudy: e.target.value })}
                   required
                 />
                 <div className="flex items-center space-x-4">
@@ -356,24 +356,24 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
                     <Button
                       type="button"
                       size="sm"
-                      variant={editInternship.status === "pending" ? "primary" : "secondary"}
-                      onClick={() => setEditInternship({ ...editInternship, status: "pending" })}
+                      variant={editTraining.status === "pending" ? "primary" : "secondary"}
+                      onClick={() => setEditTraining({ ...editTraining, status: "pending" })}
                     >
                       Pending
                     </Button>
                     <Button
                       type="button"
                       size="sm"
-                      variant={editInternship.status === "approved" ? "primary" : "secondary"}
-                      onClick={() => setEditInternship({ ...editInternship, status: "approved" })}
+                      variant={editTraining.status === "approved" ? "primary" : "secondary"}
+                      onClick={() => setEditTraining({ ...editTraining, status: "approved" })}
                     >
                       Approved
                     </Button>
                     <Button
                       type="button"
                       size="sm"
-                      variant={editInternship.status === "rejected" ? "primary" : "secondary"}
-                      onClick={() => setEditInternship({ ...editInternship, status: "rejected" })}
+                      variant={editTraining.status === "rejected" ? "primary" : "secondary"}
+                      onClick={() => setEditTraining({ ...editTraining, status: "rejected" })}
                     >
                       Rejected
                     </Button>
@@ -382,12 +382,12 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
               </div>
               <Textarea
                 label="Motivation Letter"
-                value={editInternship.motivationLetter}
-                onChange={(e) => setEditInternship({ ...editInternship, motivationLetter: e.target.value })}
+                value={editTraining.motivationLetter}
+                onChange={(e) => setEditTraining({ ...editTraining, motivationLetter: e.target.value })}
                 required
               />
               <DialogFooter>
-                <Button type="button" variant="secondary" onClick={() => setEditInternship(null)}>
+                <Button type="button" variant="secondary" onClick={() => setEditTraining(null)}>
                   Cancel
                 </Button>
                 <Button type="submit" disabled={isSubmitting}>
@@ -409,20 +409,20 @@ export function InternshipsTable({ onNotification }: InternshipsTableProps) {
         </DialogContent>
       </Dialog>
 
-      {/* Delete Internship Dialog */}
-      <Dialog open={!!deleteInternship} onOpenChange={(open) => !open && setDeleteInternship(null)}>
+      {/* Delete Training Dialog */}
+      <Dialog open={!!deleteTraining} onOpenChange={(open) => !open && setDeleteTraining(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Delete Internship Application</DialogTitle>
+            <DialogTitle>Delete Training Application</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p>
-              Are you sure you want to delete the application from <strong>{deleteInternship?.fullName}</strong>?
+              Are you sure you want to delete the application from <strong>{deleteTraining?.fullName}</strong>?
             </p>
             <p className="text-sm text-gray-400 mt-2">This action cannot be undone.</p>
           </div>
           <DialogFooter>
-            <Button variant="secondary" onClick={() => setDeleteInternship(null)}>
+            <Button variant="secondary" onClick={() => setDeleteTraining(null)}>
               Cancel
             </Button>
             <Button

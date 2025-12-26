@@ -61,7 +61,7 @@ export function DetailedApplicationForm() {
     })
 
     try {
-      const response = await fetch("/api/internship", {
+      const response = await fetch("/api/training", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

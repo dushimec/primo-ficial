@@ -9,11 +9,11 @@ export const siteConfig = {
   name: "Primo Fiscal Partners",
   description:
     "Your trusted partner in financial excellence, providing comprehensive accounting, tax, and advisory services to help your business thrive.",
-  url: "https://primoficialpartners.com",
+  url: "https://www.primofiscalpartners.rw",
   ogImage: "/logo.png",
   links: {
-    twitter: "https://twitter.com/primoficial",
-    facebook: "https://facebook.com/primoficialpartners",
+    twitter: "https://twitter.com/primofiscal",
+    facebook: "https://facebook.com/primofiscalpartners",
     linkedin: "https://linkedin.com/company/primo-fiscal-partners",
   },
   keywords: [
@@ -32,6 +32,6 @@ export const siteConfig = {
     "tax compliance",
     "business strategy",
     "financial management",
-    "accounting internship",
+    "accounting training",
   ],
 }

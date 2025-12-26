@@ -20,12 +20,12 @@ export function AboutHero() {
         <AnimatedSection animation="fade-left">
           <h2 className="text-xl font-semibold mb-4">Our Story</h2>
           <p className="text-sm mb-4">
-            Founded in 2008, Primo Fiscal Partners has grown from a small consulting firm to a leading financial
+            Founded in 2025, Primo Fiscal Partners has grown from a small consulting firm to a leading financial
             services provider in Somalia. Our journey began with a vision to transform how businesses approach financial
             management.
           </p>
           <p className="text-sm">
-            Today, we serve hundreds of clients across East Africa, providing comprehensive financial and tax services
+            Today, we serve hundreds of clients across Rwanda, providing comprehensive financial and tax services
             that help businesses thrive in our ever-evolving economic landscape.
           </p>
         </AnimatedSection>

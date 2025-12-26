@@ -20,7 +20,7 @@ export function OfficeInfo() {
                   <br />
                   (Former Makuza Peace Plazza)
                   <br />
-                  F2-37
+                  F3-37
                 </p>
               </div>
             </div>
@@ -31,9 +31,7 @@ export function OfficeInfo() {
               </div>
               <div>
                 <p className="text-sm">
-                  +252 789 877 775
-                  <br />
-                  +252 788 595 456
+                  +250 788 877 775
                 </p>
               </div>
             </div>
@@ -43,7 +41,7 @@ export function OfficeInfo() {
                 <Mail className="text-orange-400" size={16} />
               </div>
               <div>
-                <p className="text-sm">primoficialpartners@gmail.com</p>
+                <p className="text-sm">primofiscalpartners@gmail.com</p>
               </div>
             </div>
           </div>

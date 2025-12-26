@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ContactsTable } from "@/components/admin/contacts-table"
-import { InternshipsTable } from "@/components/admin/internships-table"
+import { TrainingsTable } from "@/components/admin/internships-table"
 import { AlertCircle, CheckCircle } from "lucide-react"
 
 interface AdminDashboardProps {
@@ -72,7 +72,7 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
         <Tabs defaultValue="contacts">
           <TabsList className="mb-6">
             <TabsTrigger value="contacts">Contact Submissions</TabsTrigger>
-            <TabsTrigger value="internships">Internship Applications</TabsTrigger>
+            <TabsTrigger value="trainings">Training Applications</TabsTrigger>
           </TabsList>
 
           <TabsContent value="contacts">
@@ -82,10 +82,10 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
             </Card>
           </TabsContent>
 
-          <TabsContent value="internships">
+          <TabsContent value="trainings">
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4">Internship Applications</h2>
-              <InternshipsTable onNotification={showNotification} />
+              <h2 className="text-xl font-semibold mb-4">Training Applications</h2>
+              <TrainingsTable onNotification={showNotification} />
             </Card>
           </TabsContent>
         </Tabs>

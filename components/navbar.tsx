@@ -83,8 +83,8 @@ export default function Navbar() {
           <Link href="/services" className="text-white hover:text-orange-400 transition-colors duration-300">
             Services
           </Link>
-          <Link href="/internship" className="text-white hover:text-orange-400 transition-colors duration-300">
-            Internship
+          <Link href="/training" className="text-white hover:text-orange-400 transition-colors duration-300">
+            Training
           </Link>
           <Link href="/contact" className="text-white hover:text-orange-400 transition-colors duration-300">
             Contact
@@ -147,11 +147,11 @@ export default function Navbar() {
             Services
           </Link>
           <Link
-            href="/internship"
+            href="/training"
             className="w-full text-white hover:text-orange-400 py-3 px-4 rounded-md hover:bg-[#252338] transition-colors duration-200 text-center"
             onClick={() => setIsMenuOpen(false)}
           >
-            Internship
+            Training
           </Link>
           <Link
             href="/contact"

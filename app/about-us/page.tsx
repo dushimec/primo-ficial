@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { AboutHero } from "@/components/sections/about-hero"
 import { MissionValues } from "@/components/sections/mission-values"
+import { WhyChooseUs } from "@/components/sections/why-choose-us"
 import { siteConfig } from "@/lib/utils"
 
 export const metadata: Metadata = {
@@ -35,6 +36,7 @@ export default function AboutUs() {
       <div className="max-w-6xl mx-auto py-12 px-6">
         <AboutHero />
         <MissionValues />
+        <WhyChooseUs />
       </div>
     </div>
   )
