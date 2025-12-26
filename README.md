@@ -8,6 +8,9 @@ The following environment variables need to be set up for the application to wor
 
 ### MongoDB Connection
 - `MONGODB_URI`: MongoDB connection string
+- `SKIP_DB_DURING_BUILD` (optional): set to `1` to prevent database access during build-time (useful when your DB is not accessible from the build environment or to avoid DNS SRV lookups during static generation)
+
+Note: On Vercel, make sure `MONGODB_URI` is set in the project Environment variables for both Preview and Production (or set `SKIP_DB_DURING_BUILD=1` if you don't want builds to attempt DB connections).
 
 ### NextAuth Configuration
 - `NEXTAUTH_URL`: The base URL of your website
@@ -65,5 +68,6 @@ The easiest way to deploy this application is using the [Vercel Platform](https:
 1. Push your code to a Git repository (GitHub, GitLab, BitBucket)
 2. Import the project in Vercel
 3. Add the required environment variables in the Vercel project settings
-4. Deploy
+4. Ensure you are using an up-to-date, patched version of `next` before deploying (Vercel may block vulnerable releases). Run `npm install` after updating `package.json`.
+5. Deploy
 # primo-ficial

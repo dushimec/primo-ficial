@@ -1,6 +1,6 @@
 import { MongoClient, ServerApiVersion } from "mongodb"
 
-// Only throw an error if we're not in a build environment
+// If MONGODB_URI is missing during local dev, warn the developer
 if (!process.env.MONGODB_URI && process.env.NODE_ENV !== "production" && process.env.VERCEL_ENV !== "production") {
   console.warn("MongoDB URI is not defined. Please add your MongoDB URI to .env.local")
 }
@@ -15,17 +15,17 @@ const options = {
 }
 
 let client: MongoClient
-let clientPromise: Promise<MongoClient>
+// We intentionally do NOT create a connection at module import time. This
+// prevents build-time DNS lookups (e.g., SRV queries) which can fail in
+// build environments and break static generation.
+let clientPromise: Promise<MongoClient> | null = null
 
-// Create a conditional connection that only connects when the URI is available
 const createConnection = () => {
   if (!uri) {
     throw new Error("Please add your MongoDB URI to environment variables")
   }
 
   if (process.env.NODE_ENV === "development") {
-    // In development mode, use a global variable so that the value
-    // is preserved across module reloads caused by HMR (Hot Module Replacement).
     const globalWithMongo = global as typeof global & {
       _mongoClientPromise?: Promise<MongoClient>
     }
@@ -36,38 +36,39 @@ const createConnection = () => {
     }
     return globalWithMongo._mongoClientPromise
   } else {
-    // In production mode, it's best to not use a global variable.
     client = new MongoClient(uri, options)
     return client.connect()
   }
 }
 
-// Don't actually connect during build time
-if (process.env.NODE_ENV === "production" && process.env.VERCEL_ENV !== "production") {
-  // This is a build step, don't actually connect
-  clientPromise = Promise.resolve({} as MongoClient)
-} else {
-  try {
-    clientPromise = createConnection()
-  } catch (error) {
-    console.error("MongoDB connection error:", error)
-    // Provide a fallback promise that will throw a more helpful error when used
-    clientPromise = Promise.resolve({} as MongoClient)
-  }
-}
-
-// Export a module-scoped MongoClient promise. By doing this in a
-// separate module, the client can be shared across functions.
-export default clientPromise
-
-// Helper function to check if the connection is valid before using it
+// Public helper: obtain a valid client on demand. This will attempt to
+// connect the first time it's called. To avoid connecting during build,
+// set SKIP_DB_DURING_BUILD=1 in your build environment (e.g., Vercel project
+// env) which will make this function throw a clear error instead of
+// triggering DNS resolution.
 export async function getValidClient() {
+  // If the caller intentionally disabled DB access during builds, fail fast
+  if (process.env.SKIP_DB_DURING_BUILD === "1") {
+    throw new Error("Database access disabled during build time (SKIP_DB_DURING_BUILD=1).")
+  }
+
+  if (!clientPromise) {
+    try {
+      clientPromise = createConnection()
+    } catch (error: any) {
+      console.error("MongoDB connection error (deferred):", error)
+      throw new Error("MongoDB connection failed: " + (error?.message || String(error)))
+    }
+  }
+
   const client = await clientPromise
 
-  // Check if this is a real client or our fallback empty object
-  if (!client.db) {
+  if (!client || !client.db) {
     throw new Error("MongoDB connection not available. Please check your environment variables.")
   }
 
   return client
 }
+
+// Export default as null to discourage accidental module-init connections.
+export default null as unknown as Promise<MongoClient>
