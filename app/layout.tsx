@@ -64,8 +64,15 @@ export const metadata: Metadata = {
     },
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
-    generator: 'v0.dev'
-}
+  alternates: {
+    canonical: siteConfig.url,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  generator: 'primofiscal'
+} 
 
 export default function RootLayout({
   children,
@@ -77,6 +84,19 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: siteConfig.name,
+              url: siteConfig.url,
+              logo: `${siteConfig.url}/logo.png`,
+              sameAs: Object.values(siteConfig.links || {}),
+            }),
+          }}
+        />
       </head>
       <body className={inter.className}>
         <Navbar />

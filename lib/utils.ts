@@ -10,7 +10,8 @@ export const siteConfig = {
   description:
     "Your trusted partner in financial excellence, providing comprehensive accounting, tax, and advisory services to help your business thrive.",
   url: "https://www.primofiscalpartners.rw",
-  ogImage: "/logo.png",
+  // Use absolute URL for social/OG images
+  ogImage: "https://www.primofiscalpartners.rw/logo.png",
   links: {
     twitter: "https://twitter.com/primofiscal",
     facebook: "https://facebook.com/primofiscalpartners",
