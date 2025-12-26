@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://primofiscalpartners.com/sitemap.xml
+Sitemap: https://www.primofiscalpartners.rw/sitemap.xml
