@@ -12,10 +12,12 @@ export function PageHeader({ title, description }: PageHeaderProps) {
 
   return (
     <AnimatedSection className="text-center mb-12">
-      <h1 className="text-2xl font-bold text-center">
-        {firstPart} <span className="text-orange-400">{lastWord}</span>
-      </h1>
-      {description && <p className="text-center text-sm mt-2 max-w-2xl mx-auto">{description}</p>}
+      <div className="layout-container">
+        <h1 className="text-2xl font-bold text-center">
+          {firstPart} <span className="text-orange-400">{lastWord}</span>
+        </h1>
+        {description && <p className="text-center text-sm mt-2 max-w-2xl mx-auto">{description}</p>}
+      </div>
     </AnimatedSection>
   )
 }

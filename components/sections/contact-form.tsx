@@ -97,64 +97,68 @@ export function ContactForm() {
   }
 
   return (
-    <AnimatedSection animation="fade-right">
-      <Card>
-        <h2 className="text-xl font-semibold mb-4">Send us a Message</h2>
+    <section className="section-spacing">
+      <div className="layout-container">
+        <AnimatedSection animation="fade-right">
+          <Card>
+            <h2 className="text-xl font-semibold mb-4">Let's Discuss Your Financial Needs</h2>
 
-        {status.type && (
-          <div
-            className={`mb-4 p-3 rounded text-sm ${
-              status.type === "success"
-                ? "bg-green-500/20 text-green-200"
-                : status.type === "error"
-                  ? "bg-red-500/20 text-red-200"
-                  : "bg-blue-500/20 text-blue-200"
-            }`}
-          >
-            {status.message}
-          </div>
-        )}
+            {status.type && (
+              <div
+                className={`mb-4 p-3 rounded text-sm ${
+                  status.type === "success"
+                    ? "bg-green-500/20 text-green-200"
+                    : status.type === "error"
+                      ? "bg-red-500/20 text-red-200"
+                      : "bg-blue-500/20 text-blue-200"
+                }`}
+              >
+                {status.message}
+              </div>
+            )}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <Input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
 
-          <Input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+              <Input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
 
-          <Input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} />
+              <Input type="tel" name="phone" placeholder="Your Phone" value={formData.phone} onChange={handleChange} />
 
-          <Textarea
-            name="message"
-            placeholder="Your Message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-          />
+              <Textarea
+                name="message"
+                placeholder="Tell us about your business and how we can help..."
+                value={formData.message}
+                onChange={handleChange}
+                required
+              />
 
-          <Button
-            type="submit"
-            variant="primary"
-            fullWidth
-            className={status.type === "loading" ? "opacity-70 cursor-not-allowed" : ""}
-            onClick={status.type === "loading" ? (e) => e.preventDefault() : undefined}
-          >
-            {status.type === "loading" ? "Sending..." : "Send Message"}
-          </Button>
-        </form>
-      </Card>
-    </AnimatedSection>
+              <Button
+                type="submit"
+                variant="primary"
+                fullWidth
+                className={status.type === "loading" ? "opacity-70 cursor-not-allowed" : ""}
+                onClick={status.type === "loading" ? (e) => e.preventDefault() : undefined}
+              >
+                {status.type === "loading" ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
+          </Card>
+        </AnimatedSection>
+      </div>
+    </section>
   )
 }

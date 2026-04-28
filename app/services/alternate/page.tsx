@@ -35,18 +35,20 @@ export const metadata: Metadata = {
 
 export default function ServicesAlternate() {
   return (
-    <div className="bg-[#1e1b2e] text-white min-h-screen">
-      <div className="max-w-6xl mx-auto py-12 px-6">
+    <div className="bg-[#1e1b2e] text-white">
+      <div className="layout-container">
         <PageHeader title="Our Services" />
         <AlternateServicesList />
         <WhyChooseUs />
 
         {/* Ready to Get Started */}
-        <div className="text-center">
-          <h2 className="text-xl font-semibold mb-6">Ready to Get Started?</h2>
-          <Button href="/contact" variant="primary">
-            Contact Us Today
-          </Button>
+        <div className="section-spacing">
+          <div className="layout-container text-center">
+            <h2 className="text-xl font-semibold mb-6">Ready to Get Started?</h2>
+            <Button href="/contact" variant="primary">
+              Contact Us Today
+            </Button>
+          </div>
         </div>
       </div>
     </div>

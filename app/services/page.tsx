@@ -2,23 +2,26 @@ import type { Metadata } from "next"
 import { PageHeader } from "@/components/ui/page-header"
 import { ServicesList } from "@/components/sections/services-list"
 import { ServiceApproach } from "@/components/sections/service-approach"
+import { IndustrySection } from "@/components/sections/industry-section"
+import { StatsSection } from "@/components/sections/stats-section"
+import { CTABanner } from "@/components/sections/cta-banner"
 import { siteConfig } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Explore our comprehensive accounting, tax, advisory, and digital services for businesses of all sizes.",
+  title: "Our Services | Primo Fiscal Partners",
+  description: "Comprehensive accounting, tax compliance, consulting, and training services for SMEs, corporates, NGOs, and institutions across Rwanda.",
   keywords: [
     ...siteConfig.keywords,
-    "accounting services Somalia",
-    "tax planning East Africa",
-    "business advisory services",
-    "financial consulting",
-    "digital accounting solutions",
+    "accounting services Rwanda",
+    "tax compliance Rwanda",
+    "business consulting services",
+    "financial advisory Rwanda",
+    "corporate tax services",
+    "audit preparation services",
   ],
   openGraph: {
-    title: "Services | Primo Fiscal Partners",
-    description:
-      "Explore our comprehensive accounting, tax, advisory, and digital services for businesses of all sizes.",
+    title: "Our Services | Primo Fiscal Partners",
+    description: "Professional accounting, tax, consulting, and training services tailored for businesses across Rwanda.",
     url: `${siteConfig.url}/services`,
     images: [
       {
@@ -33,11 +36,14 @@ export const metadata: Metadata = {
 
 export default function Services() {
   return (
-    <div className="bg-[#1e1b2e] text-white min-h-screen">
-      <div className="max-w-6xl mx-auto py-12 px-6">
+    <div className="bg-[#1e1b2e] text-white">
+      <div className="layout-container">
         <PageHeader title="Our Services" />
         <ServicesList />
         <ServiceApproach />
+        <IndustrySection />
+        <StatsSection />
+        <CTABanner />
       </div>
     </div>
   )

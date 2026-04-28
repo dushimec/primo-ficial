@@ -5,26 +5,26 @@ import { OfficeInfo } from "@/components/sections/office-info"
 import { siteConfig } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: `Contact Us | ${siteConfig.name}`,
-  description: "Get in touch with our team of financial experts. We're here to help your business succeed.",
+  title: `Contact Us | Primo Fiscal Partners`,
+  description: "Get in touch with our team of financial experts for professional accounting, tax compliance, and business advisory services in Rwanda.",
   keywords: [
     ...siteConfig.keywords,
-    "contact financial advisor",
+    "contact accountant Rwanda",
+    "tax consultant Kigali",
+    "financial advisory services",
+    "business consultation Rwanda",
     "accounting firm contact",
-    "Somalia financial services contact",
-    "tax planning consultation",
-    "business advisory appointment",
   ],
   openGraph: {
-    title: `Contact Us | ${siteConfig.name}`,
-    description: "Get in touch with our team of financial experts. We're here to help your business succeed.",
+    title: `Contact Us | Primo Fiscal Partners`,
+    description: "Schedule a consultation with our financial experts for accounting, tax, and business advisory services.",
     url: `${siteConfig.url}/contact`,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Contact Primo Fiscal Partners",
+        alt: "Contact Primo Fiscal Partners Rwanda",
       },
     ],
   },
@@ -32,10 +32,9 @@ export const metadata: Metadata = {
 
 export default function Contact() {
   return (
-    <div className="bg-[#1e1b2e] text-white min-h-screen">
-      <div className="max-w-6xl mx-auto py-12 px-6">
-        <PageHeader title="Contact Us" />
-
+    <div className="bg-[#1e1b2e] text-white">
+      <PageHeader title="Contact Us" />
+      <div className="layout-container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ContactForm />
           <OfficeInfo />

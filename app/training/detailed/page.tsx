@@ -20,9 +20,9 @@ export const metadata: Metadata = {
 
 export default function TrainingDetailed() {
   return (
-    <div className="bg-[#1e1b2e] text-white min-h-screen">
-      <div className="max-w-6xl mx-auto py-12 px-6">
-        <PageHeader title="Training Program" />
+    <div className="bg-[#1e1b2e] text-white">
+      <PageHeader title="Training Program" />
+      <div className="layout-container">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <TrainingDetails />
           <DetailedApplicationForm />

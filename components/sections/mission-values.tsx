@@ -1,62 +1,67 @@
 import Link from "next/link"
 import { AnimatedSection } from "@/components/ui/animated-section"
-import { Card } from "@/components/ui/card"
+import { Card, CardTitle, CardContent } from "@/components/ui/card"
 
 export function MissionValues() {
   return (
-    <div className="mb-12">
-      <AnimatedSection className="text-center">
-        <h2 className="text-xl font-semibold text-center mb-8">Our Mission & Values</h2>
-      </AnimatedSection>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatedSection animation="fade-up" delay={100}>
-          <Card className="text-center h-full">
-            <h3 className="font-semibold mb-2">Our Mission</h3>
-            <p className="text-sm text-gray-300">
-              At PRIMO FISCAL PARTNERS, our mission is to empower individuals and businesses to navigate the complexities of taxation with confidence and precision. We go beyond simple tax preparation, serving as a trusted partner dedicated to optimizing your financial outcomes and ensuring unwavering compliance with evolving tax laws and regulations.
-            </p>
-          </Card>
+    <section className="section-spacing">
+      <div className="layout-container">
+        <AnimatedSection className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">Our Mission & Values</h2>
         </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={200}>
-          <Card className="text-center h-full">
-            <h3 className="font-semibold mb-2">Who We Are</h3>
-            <p className="text-sm text-gray-300">
-              We are a team of highly qualified and experienced tax specialists, including Certified Public Accountants (CPAs), tax attorneys, and enrolled agents. Our professionals are experts in interpreting complex domestic and international tax legislation, leveraging deep knowledge and analytical skills to provide insightful, tailored solutions.
-            </p>
-          </Card>
-        </AnimatedSection>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatedSection animation="fade-up" delay={100}>
+            <Card className="text-center h-full">
+              <CardTitle>Our Mission</CardTitle>
+              <CardContent>
+                To empower businesses and institutions with reliable financial systems, effective tax strategies, and actionable insights that support sustainable growth.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={300}>
-          <Card className="text-center h-full">
-            <h3 className="font-semibold mb-2">Our Approach</h3>
-            <p className="text-sm text-gray-300">
-              We believe in a proactive, year-round approach to tax management. We take the time to understand your unique financial situation and long-term goals, enabling us to identify tax-saving opportunities and develop customized strategies that minimize your tax liabilities within the legal framework.
-            </p>
-          </Card>
-        </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={200}>
+            <Card className="text-center h-full">
+              <CardTitle>What We Do</CardTitle>
+              <CardContent>
+                We provide accurate bookkeeping, financial reporting, and structured accounting systems that support informed decision-making. We offer tax compliance, planning, and advisory services to help businesses minimize risk and remain fully compliant. We deliver financial and business advisory services that improve performance, systems, and strategic direction.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={400}>
-          <Card className="h-full">
-            <h3 className="font-semibold mb-4 text-center">Key Services</h3>
-            <ul className="text-sm text-gray-300 space-y-3">
-              <li><strong>Tax Planning & Strategy:</strong> Developing effective strategies for current and future tax efficiency.</li>
-              <li><strong>Compliance Management:</strong> Ensuring accurate and timely preparation and submission of all required tax returns and reports (e.g., Corporate Income Tax, VAT, Personal Income Tax).</li>
-              <li><strong>Audit & Dispute Resolution:</strong> Representing clients before tax authorities to resolve inquiries and disputes.</li>
-              <li><strong>Specialized Advisory:</strong> Expert guidance on international taxation, mergers and acquisitions, estate planning, and specific industry incentives like R&D tax reliefs.</li>
-            </ul>
-          </Card>
-        </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={300}>
+            <Card className="text-center h-full">
+              <CardTitle>Who We Serve</CardTitle>
+              <CardContent>
+                Small and Medium Enterprises (SMEs), large corporations, government institutions, and non-governmental organizations (NGOs) across Rwanda.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={500}>
-          <Card className="text-center h-full">
-            <p className="text-sm text-gray-300">
-              We are committed to building a world built on the foundations of trust, transparency, and exceptional service. <Link href="/contact" className="text-orange-400 hover:underline">Visit our Contact Us page</Link> to schedule an initial consultation and discover how we can help you achieve your financial objectives.
-            </p>
-          </Card>
-        </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={400}>
+            <Card className="h-full">
+              <CardTitle className="text-center">Our Services</CardTitle>
+              <CardContent>
+                <ul className="space-y-3">
+                  <li><strong>Accounting:</strong> Bookkeeping, financial reporting, management accounts, and audit preparation.</li>
+                  <li><strong>Tax:</strong> Tax planning, filing, compliance, and advisory services.</li>
+                  <li><strong>Consulting:</strong> Financial systems improvement, business strategy, and performance analysis.</li>
+                  <li><strong>Training:</strong> Capacity-building programs to enhance financial skills and knowledge.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+
+          <AnimatedSection animation="fade-up" delay={500}>
+            <Card className="text-center h-full">
+              <CardTitle>Our Commitment</CardTitle>
+              <CardContent>
+                We are committed to building relationships founded on trust, transparency, and exceptional service. <Link href="/contact" className="text-orange-400 hover:underline">Contact us</Link> to schedule an initial consultation and discover how we can help you achieve your financial objectives.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }

@@ -109,100 +109,104 @@ export function TrainingForm() {
   }
 
   return (
-    <AnimatedSection animation="fade-up">
-      <Card className="max-w-md mx-auto">
-        <h2 className="text-xl font-semibold mb-4">Apply Now</h2>
+    <section className="section-spacing">
+      <div className="layout-container">
+        <AnimatedSection animation="fade-up">
+          <Card className="max-w-md mx-auto">
+            <h2 className="text-xl font-semibold mb-4">Apply Now</h2>
 
-        {status.type && (
-          <div
-            className={`mb-4 p-3 rounded text-sm ${
-              status.type === "success"
-                ? "bg-green-500/20 text-green-200"
-                : status.type === "error"
-                  ? "bg-red-500/20 text-red-200"
-                  : "bg-blue-500/20 text-blue-200"
-            }`}
-          >
-            {status.message}
-          </div>
-        )}
+            {status.type && (
+              <div
+                className={`mb-4 p-3 rounded text-sm ${
+                  status.type === "success"
+                    ? "bg-green-500/20 text-green-200"
+                    : status.type === "error"
+                      ? "bg-red-500/20 text-red-200"
+                      : "bg-blue-500/20 text-blue-200"
+                }`}
+              >
+                {status.message}
+              </div>
+            )}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <Input
-            label="Full Name"
-            id="fullName"
-            name="fullName"
-            type="text"
-            placeholder="Your full name"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-          />
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              <Input
+                label="Full Name"
+                id="fullName"
+                name="fullName"
+                type="text"
+                placeholder="Your full name"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
 
-          <Input
-            label="Email"
-            id="email"
-            name="email"
-            type="email"
-            placeholder="you@email.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+              <Input
+                label="Email"
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@email.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
 
-          <Input
-            label="Phone"
-            id="phone"
-            name="phone"
-            type="tel"
-            placeholder="Your phone number"
-            value={formData.phone}
-            onChange={handleChange}
-          />
+              <Input
+                label="Phone"
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="Your phone number"
+                value={formData.phone}
+                onChange={handleChange}
+              />
 
-          <Input
-            label="University/Institution"
-            id="university"
-            name="university"
-            type="text"
-            placeholder="Your university"
-            value={formData.university}
-            onChange={handleChange}
-            required
-          />
+              <Input
+                label="University/Institution"
+                id="university"
+                name="university"
+                type="text"
+                placeholder="Your university"
+                value={formData.university}
+                onChange={handleChange}
+                required
+              />
 
-          <Input
-            label="Field of Study"
-            id="fieldOfStudy"
-            name="fieldOfStudy"
-            type="text"
-            placeholder="Your field of study"
-            value={formData.fieldOfStudy}
-            onChange={handleChange}
-            required
-          />
+              <Input
+                label="Field of Study"
+                id="fieldOfStudy"
+                name="fieldOfStudy"
+                type="text"
+                placeholder="Your field of study"
+                value={formData.fieldOfStudy}
+                onChange={handleChange}
+                required
+              />
 
-          <Textarea
-            label="Motivation Letter"
-            id="motivationLetter"
-            name="motivationLetter"
-            placeholder="Tell us why you want to join our training program"
-            value={formData.motivationLetter}
-            onChange={handleChange}
-            required
-          />
+              <Textarea
+                label="Motivation Letter"
+                id="motivationLetter"
+                name="motivationLetter"
+                placeholder="Tell us why you want to join our training program"
+                value={formData.motivationLetter}
+                onChange={handleChange}
+                required
+              />
 
-          <Button
-            type="submit"
-            variant="primary"
-            fullWidth
-            className={status.type === "loading" ? "opacity-70 cursor-not-allowed" : ""}
-            onClick={status.type === "loading" ? () => {} : undefined}
-          >
-            {status.type === "loading" ? "Submitting..." : "Submit Application"}
-          </Button>
-        </form>
-      </Card>
-    </AnimatedSection>
+              <Button
+                type="submit"
+                variant="primary"
+                fullWidth
+                className={status.type === "loading" ? "opacity-70 cursor-not-allowed" : ""}
+                onClick={status.type === "loading" ? () => {} : undefined}
+              >
+                {status.type === "loading" ? "Submitting..." : "Submit Application"}
+              </Button>
+            </form>
+          </Card>
+        </AnimatedSection>
+      </div>
+    </section>
   )
 }

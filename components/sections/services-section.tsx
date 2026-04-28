@@ -4,23 +4,23 @@ import { Card, CardIcon, CardTitle, CardContent } from "@/components/ui/card"
 
 export function ServicesSection() {
   return (
-    <section className="py-12 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="section-spacing">
+      <div className="layout-container">
         <AnimatedSection className="text-center">
-          <h2 className="text-2xl font-bold text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
             Our <span className="text-orange-400">Services</span>
           </h2>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <AnimatedSection animation="fade-up" delay={100}>
             <Card className="h-full">
               <CardIcon>
-                <FileText size={24} />
+                <FileText size={28} />
               </CardIcon>
-              <CardTitle>Accounting Services</CardTitle>
+              <CardTitle>Accounting</CardTitle>
               <CardContent>
-                Comprehensive bookkeeping and financial reporting to keep your business on track.
+                Accurate bookkeeping, financial reporting, and well-structured records that provide full visibility into your financial position and ensure audit readiness.
               </CardContent>
             </Card>
           </AnimatedSection>
@@ -28,20 +28,20 @@ export function ServicesSection() {
           <AnimatedSection animation="fade-up" delay={200}>
             <Card className="h-full">
               <CardIcon>
-                <FileBarChart2 size={24} />
+                <FileBarChart2 size={28} />
               </CardIcon>
-              <CardTitle>Tax Services</CardTitle>
-              <CardContent>Expert tax planning and compliance services to optimize your tax position.</CardContent>
+              <CardTitle>Tax</CardTitle>
+              <CardContent>Comprehensive tax compliance, planning, and advisory services designed to reduce risk and ensure adherence to all regulatory requirements.</CardContent>
             </Card>
           </AnimatedSection>
 
           <AnimatedSection animation="fade-up" delay={300}>
             <Card className="h-full">
               <CardIcon>
-                <BarChart3 size={24} />
+                <BarChart3 size={28} />
               </CardIcon>
-              <CardTitle>Advisory Services</CardTitle>
-              <CardContent>Strategic business advice to help you make informed decisions and grow.</CardContent>
+              <CardTitle>Consulting</CardTitle>
+              <CardContent>Strategic financial and business advisory services that improve performance, strengthen systems, and support long-term growth.</CardContent>
             </Card>
           </AnimatedSection>
         </div>

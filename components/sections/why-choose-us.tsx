@@ -1,48 +1,65 @@
+import { ShieldCheck, ClipboardCheck, Lightbulb, TrendingUp } from "lucide-react"
 import { AnimatedSection } from "@/components/ui/animated-section"
-import { Card } from "@/components/ui/card"
+import { Card, CardIcon, CardTitle, CardContent } from "@/components/ui/card"
 
 export function WhyChooseUs() {
   return (
-    <Card className="mb-12">
-      <h2 className="text-xl font-semibold text-center mb-8">Why Choose Us?</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-        <AnimatedSection animation="fade-up" delay={100}>
-          <div>
-            <h3 className="font-semibold mb-2">Expertise & Experience</h3>
-            <p className="text-sm text-gray-300">
-              Decades of combined experience across various industries and tax situations, led by CPAs, tax attorneys, and enrolled agents.
-            </p>
-          </div>
+    <section className="section-spacing">
+      <div className="layout-container">
+        <AnimatedSection className="text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">Why Choose Us?</h2>
         </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={200}>
-          <div>
-            <h3 className="font-semibold mb-2">Peace of Mind</h3>
-            <p className="text-sm text-gray-300">
-              We manage the complexities so you can focus on running your business.
-            </p>
-          </div>
-        </AnimatedSection>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <AnimatedSection animation="fade-up" delay={100}>
+            <Card className="h-full">
+              <CardIcon>
+                <ShieldCheck size={28} />
+              </CardIcon>
+              <CardTitle>Integrity</CardTitle>
+              <CardContent>
+                We deliver services with professionalism, transparency, and ethical standards.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={300}>
-          <div>
-            <h3 className="font-semibold mb-2">Tailored Solutions</h3>
-            <p className="text-sm text-gray-300">
-              Bespoke advice specific to your circumstances not generic answers.
-            </p>
-          </div>
-        </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={200}>
+            <Card className="h-full">
+              <CardIcon>
+                <ClipboardCheck size={28} />
+              </CardIcon>
+              <CardTitle>Compliance</CardTitle>
+              <CardContent>
+                We ensure your business meets all legal and regulatory obligations.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={400}>
-          <div>
-            <h3 className="font-semibold mb-2">Global Reach</h3>
-            <p className="text-sm text-gray-300">
-              Our network allows us to seamlessly manage cross-border tax affairs for multinational clients.
-            </p>
-          </div>
-        </AnimatedSection>
+          <AnimatedSection animation="fade-up" delay={300}>
+            <Card className="h-full">
+              <CardIcon>
+                <Lightbulb size={28} />
+              </CardIcon>
+              <CardTitle>Insight</CardTitle>
+              <CardContent>
+                We turn financial data into clear, actionable business intelligence.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+
+          <AnimatedSection animation="fade-up" delay={400}>
+            <Card className="h-full">
+              <CardIcon>
+                <TrendingUp size={28} />
+              </CardIcon>
+              <CardTitle>Results</CardTitle>
+              <CardContent>
+                We focus on measurable outcomes that support growth and sustainability.
+              </CardContent>
+            </Card>
+          </AnimatedSection>
+        </div>
       </div>
-    </Card>
+    </section>
   )
 }

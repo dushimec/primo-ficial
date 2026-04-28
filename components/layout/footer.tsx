@@ -5,76 +5,87 @@ import { siteConfig } from "@/lib/utils"
 
 export function Footer() {
   return (
-    <footer className="bg-[#1e1b2e] text-white py-8 px-6">
-      <div className="max-w-6xl mx-auto flex flex-col items-center">
-        <Link href="/" className="mb-6 transition-transform duration-300 hover:scale-110 flex flex-col items-center">
-          <Image
-            src="/logo.png"
-            alt={`${siteConfig.name} Logo`}
-            width={64}
-            height={64}
-            className=" p-1"
-            priority
-          />
-          <span className="mt-2 text-base font-semibold">
+    <footer className="bg-[#1e1b2e] text-white mt-auto">
+      <div className="layout-container py-12">
+        {/* Top Section: Brand Identity */}
+        <div className="text-center mb-10">
+          <Link href="/" className="inline-block mb-4 transition-transform duration-300 hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt={`${siteConfig.name} Logo`}
+              width={64}
+              height={64}
+              priority
+            />
+          </Link>
+          <h1 className="text-2xl font-bold mb-1">
             Primo <span className="text-orange-400">Fiscal</span> Partners
-          </span>
-        </Link>
+          </h1>
+          <p className="text-gray-300 max-w-xl mx-auto">
+            Trusted partner in accounting, tax & financial growth
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full">
-          <div className="flex flex-col items-center sm:items-start md:items-center">
-            <h3 className="font-medium mb-2">Location</h3>
-            <p className="text-center sm:text-left md:text-center text-sm">
+        {/* Middle Section: Info Columns */}
+        <div className="grid md:grid-cols-3 gap-10 text-center md:text-left mb-10">
+          {/* Location */}
+          <div>
+            <h3 className="font-semibold mb-2 text-white">Location</h3>
+            <p className="text-gray-300 whitespace-pre-line">
               YYussa City Center
-              <br />
-              (Former Makuza Peace
-              <br />
-              Plazza)
-              <br />
+              (Former Makuza Peace Plazza)
               F3-37
             </p>
           </div>
-
-          <div className="flex flex-col items-center">
-            <h3 className="font-medium mb-2">Contact</h3>
-            <p className="text-center text-sm">
-               +250 788 877 775
+          {/* Contact */}
+          <div>
+            <h3 className="font-semibold mb-2 text-white">Contact</h3>
+            <p className="text-gray-300">
+              <a href="tel:+250788877775" className="hover:text-white transition-colors">
+                +250 788 877 775
+              </a>
             </p>
           </div>
-
-          <div className="flex flex-col items-center sm:items-end md:items-center">
-            <h3 className="font-medium mb-2">Email</h3>
-            <p className="text-center sm:text-right md:text-center text-sm">primofiscalpartners@gmail.com</p>
+          {/* Email */}
+          <div>
+            <h3 className="font-semibold mb-2 text-white">Email</h3>
+            <p className="text-gray-300">
+              <a href="mailto:primofiscalpartners@gmail.com" className="hover:text-white transition-colors">
+                primofiscalpartners@gmail.com
+              </a>
+            </p>
           </div>
         </div>
 
-        <div className="flex space-x-4 mt-6">
+        {/* Social Section */}
+        <div className="flex justify-center space-x-4 mb-10">
           <Link
             href="#"
             aria-label="Facebook"
-            className="text-white hover:text-orange-400 transition-colors duration-300"
+            className="text-gray-300 hover:text-white transition-colors duration-300"
           >
-            <Facebook size={18} />
+            <Facebook size={20} />
           </Link>
           <Link
             href="#"
             aria-label="Twitter"
-            className="text-white hover:text-orange-400 transition-colors duration-300"
+            className="text-gray-300 hover:text-white transition-colors duration-300"
           >
-            <Twitter size={18} />
+            <Twitter size={20} />
           </Link>
           <Link
             href="https://www.instagram.com/primo_fiscal?igsh=cHBzOGt3b3JrNDNm"
             aria-label="Instagram"
-            className="text-white hover:text-orange-400 transition-colors duration-300"
+            className="text-gray-300 hover:text-white transition-colors duration-300"
           >
-            <InstagramIcon size={18} />
+            <InstagramIcon size={20} />
           </Link>
         </div>
 
-        <p className="mt-6 text-xs text-gray-400">
+        {/* Bottom Bar: Legal */}
+        <div className="border-t border-white/10 pt-6 text-center text-gray-400 text-sm">
           © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
-        </p>
+        </div>
       </div>
     </footer>
   )
