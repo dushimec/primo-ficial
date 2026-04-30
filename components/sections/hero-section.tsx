@@ -40,7 +40,7 @@ export function HeroSection() {
         <AnimatedSection animation="fade-left" className="md:w-1/2 w-full">
           <div className="relative rounded-xl overflow-hidden shadow-2xl border-2 border-white/20 max-w-lg mx-auto md:mx-0">
             <Image
-              src="https://www.primofiscalpartners.rw/logo.png"
+              src="https://freewebillustrations.com/static/images/intro.svg"
               alt="Primo Fiscal Partners logo"
               width={500}
               height={400}

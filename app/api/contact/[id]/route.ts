@@ -1,12 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getValidClient } from "@/lib/db/mongodb"
-import { ObjectId } from "mongodb"
+import { prisma } from "@/lib/db/prisma"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import loggerService from "@/lib/services/logger-service"
 
-// Get a single contact by ID
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+// Get a single contact submission by ID
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Check authentication
     const session = await getServerSession(authOptions)
@@ -14,30 +13,24 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 })
     }
 
-    const id = params.id
+    const { id } = await params
 
-    if (!ObjectId.isValid(id)) {
-      return NextResponse.json({ success: false, message: "Invalid ID format" }, { status: 400 })
-    }
-
-    const client = await getValidClient()
-    const db = client.db("primo_fiscal")
-    const collection = db.collection("contact_submissions")
-
-    const contact = await collection.findOne({ _id: new ObjectId(id) })
+    const contact = await prisma.contactSubmission.findUnique({
+      where: { id },
+    })
 
     if (!contact) {
-      return NextResponse.json({ success: false, message: "Contact not found" }, { status: 404 })
+      return NextResponse.json({ success: false, message: "Contact submission not found" }, { status: 404 })
     }
 
     return NextResponse.json({ success: true, data: contact })
   } catch (error) {
-    loggerService.error("Error fetching contact", { error, id: params.id })
+    loggerService.error("Error fetching contact submission", { error, id })
     return NextResponse.json({ success: false, message: "An error occurred" }, { status: 500 })
   }
 }
 
-// Update a contact
+// Update a contact submission
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Check authentication
@@ -48,10 +41,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const id = params.id
 
-    if (!ObjectId.isValid(id)) {
-      return NextResponse.json({ success: false, message: "Invalid ID format" }, { status: 400 })
-    }
-
     const data = await request.json()
     const { name, email, phone, message } = data
 
@@ -59,28 +48,29 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ success: false, message: "Name, email, and message are required" }, { status: 400 })
     }
 
-    const client = await getValidClient()
-    const db = client.db("primo_fiscal")
-    const collection = db.collection("contact_submissions")
+    const contact = await prisma.contactSubmission.update({
+      where: { id },
+      data: {
+        name,
+        email,
+        phone,
+        message,
+      },
+    })
 
-    const result = await collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: { name, email, phone, message, updatedAt: new Date() } },
-    )
-
-    if (result.matchedCount === 0) {
-      return NextResponse.json({ success: false, message: "Contact not found" }, { status: 404 })
+    if (!contact) {
+      return NextResponse.json({ success: false, message: "Contact submission not found" }, { status: 404 })
     }
 
-    loggerService.info("Contact updated", { id, email })
-    return NextResponse.json({ success: true, message: "Contact updated successfully" })
+    loggerService.info("Contact submission updated", { id, email })
+    return NextResponse.json({ success: true, message: "Contact submission updated successfully" })
   } catch (error) {
-    loggerService.error("Error updating contact", { error, id: params.id })
+    loggerService.error("Error updating contact submission", { error, id })
     return NextResponse.json({ success: false, message: "An error occurred" }, { status: 500 })
   }
 }
 
-// Delete a contact
+// Delete a contact submission
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     // Check authentication
@@ -91,24 +81,18 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     const id = params.id
 
-    if (!ObjectId.isValid(id)) {
-      return NextResponse.json({ success: false, message: "Invalid ID format" }, { status: 400 })
+    const contact = await prisma.contactSubmission.delete({
+      where: { id },
+    })
+
+    if (!contact) {
+      return NextResponse.json({ success: false, message: "Contact submission not found" }, { status: 404 })
     }
 
-    const client = await getValidClient()
-    const db = client.db("primo_fiscal")
-    const collection = db.collection("contact_submissions")
-
-    const result = await collection.deleteOne({ _id: new ObjectId(id) })
-
-    if (result.deletedCount === 0) {
-      return NextResponse.json({ success: false, message: "Contact not found" }, { status: 404 })
-    }
-
-    loggerService.info("Contact deleted", { id })
-    return NextResponse.json({ success: true, message: "Contact deleted successfully" })
+    loggerService.info("Contact submission deleted", { id })
+    return NextResponse.json({ success: true, message: "Contact submission deleted successfully" })
   } catch (error) {
-    loggerService.error("Error deleting contact", { error, id: params.id })
+    loggerService.error("Error deleting contact submission", { error, id })
     return NextResponse.json({ success: false, message: "An error occurred" }, { status: 500 })
   }
 }

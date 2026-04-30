@@ -1,8 +1,9 @@
 import { hash } from "bcryptjs"
-import { getValidClient } from "../db/mongodb"
+import { prisma } from "../db/prisma"
 import loggerService from "./logger-service"
 
 interface AdminUser {
+  id?: string
   name: string
   email: string
   password: string
@@ -11,8 +12,6 @@ interface AdminUser {
 
 export class AdminService {
   private static instance: AdminService
-  private dbName = "primo_fiscal"
-  private collectionName = "users"
 
   private constructor() {}
 
@@ -25,12 +24,10 @@ export class AdminService {
 
   async createAdminUser(userData: AdminUser): Promise<boolean> {
     try {
-      const client = await getValidClient()
-      const db = client.db(this.dbName)
-      const collection = db.collection(this.collectionName)
-
       // Check if user already exists
-      const existingUser = await collection.findOne({ email: userData.email })
+      const existingUser = await prisma.user.findUnique({
+        where: { email: userData.email },
+      })
 
       if (existingUser) {
         loggerService.warn("Admin user already exists", { email: userData.email })
@@ -41,18 +38,17 @@ export class AdminService {
       const hashedPassword = await hash(userData.password, 10)
 
       // Create the user
-      const result = await collection.insertOne({
-        ...userData,
-        password: hashedPassword,
-        createdAt: new Date(),
+      await prisma.user.create({
+        data: {
+          name: userData.name,
+          email: userData.email,
+          password: hashedPassword,
+          role: userData.role || "admin",
+        },
       })
 
-      if (result.acknowledged) {
-        loggerService.info("Admin user created successfully", { email: userData.email })
-        return true
-      } else {
-        throw new Error("Failed to create admin user")
-      }
+      loggerService.info("Admin user created successfully", { email: userData.email })
+      return true
     } catch (error) {
       loggerService.error("Error creating admin user", { error })
       return false
@@ -61,19 +57,43 @@ export class AdminService {
 
   async getAllAdminUsers(): Promise<AdminUser[]> {
     try {
-      const client = await getValidClient()
-      const db = client.db(this.dbName)
-      const collection = db.collection(this.collectionName)
-
-      const users = await collection
-        .find({})
-        .project({ password: 0 }) // Exclude password
-        .toArray()
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          createdAt: true,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      })
 
       return users as unknown as AdminUser[]
     } catch (error) {
       loggerService.error("Error fetching admin users", { error })
       return []
+    }
+  }
+
+  async getUserByEmail(email: string): Promise<AdminUser | null> {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { email },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          password: true,
+          role: true,
+        },
+      })
+
+      return user as unknown as AdminUser
+    } catch (error) {
+      loggerService.error("Error fetching user by email", { error })
+      return null
     }
   }
 }

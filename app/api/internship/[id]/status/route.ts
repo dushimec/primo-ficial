@@ -1,13 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getValidClient } from "@/lib/db/mongodb"
-import { ObjectId } from "mongodb"
+import { prisma } from "@/lib/db/prisma"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import loggerService from "@/lib/services/logger-service"
-import emailService from "@/lib/services/email-service"
+import { EmailService } from "@/lib/services/email-service"
 
-// Update the status of an internship application
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+// Update the status of a training application
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Check authentication
     const session = await getServerSession(authOptions)
@@ -15,11 +14,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 })
     }
 
-    const id = params.id
-
-    if (!ObjectId.isValid(id)) {
-      return NextResponse.json({ success: false, message: "Invalid ID format" }, { status: 400 })
-    }
+    const { id } = await params
 
     const data = await request.json()
     const { status } = data
@@ -28,45 +23,38 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ success: false, message: "Valid status is required" }, { status: 400 })
     }
 
-    const client = await getValidClient()
-    const db = client.db("primo_fiscal")
-    const collection = db.collection("internship_applications")
-
     // First get the application to have the email for notification
-    const application = await collection.findOne({ _id: new ObjectId(id) })
+    const application = await prisma.trainingApplication.findUnique({
+      where: { id },
+    })
 
     if (!application) {
-      return NextResponse.json({ success: false, message: "Internship application not found" }, { status: 404 })
+      return NextResponse.json({ success: false, message: "Training application not found" }, { status: 404 })
     }
 
     // Update the status
-    const result = await collection.updateOne(
-      { _id: new ObjectId(id) },
-      {
-        $set: {
-          status,
-          statusUpdatedAt: new Date(),
-        },
+    await prisma.trainingApplication.update({
+      where: { id },
+      data: {
+        status,
+        statusUpdatedAt: new Date(),
       },
-    )
-
-    if (result.matchedCount === 0) {
-      return NextResponse.json({ success: false, message: "Internship application not found" }, { status: 404 })
-    }
+    })
 
     // Send notification email to the applicant
     if (status !== "pending") {
       try {
-        await emailService.sendContactNotification({
-          name: application.fullName,
+        const emailService = EmailService.getInstance()
+        await emailService.sendTrainingStatusNotification({
+          fullName: application.fullName,
           email: application.email,
           phone: application.phone || "",
-          message: `Your internship application has been ${status}. ${
-            status === "approved"
-              ? "Congratulations! We will contact you soon with further details."
-              : "Thank you for your interest in our program."
-          }`,
+          university: application.university,
+          fieldOfStudy: application.fieldOfStudy,
+          motivationLetter: application.motivationLetter,
+          status,
         })
+        loggerService.info("Status notification email sent", { id, email: application.email, status })
       } catch (emailError) {
         loggerService.error("Failed to send status notification email", {
           error: emailError,
@@ -76,10 +64,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
     }
 
-    loggerService.info("Internship application status updated", { id, status, email: application.email })
-    return NextResponse.json({ success: true, message: `Internship application ${status} successfully` })
+    loggerService.info("Training application status updated", { id, status, email: application.email })
+    return NextResponse.json({ success: true, message: `Training application ${status} successfully` })
   } catch (error) {
-    loggerService.error("Error updating internship application status", { error, id: params.id })
+    const { id } = await params
+    loggerService.error("Error updating training application status", { error, id })
     return NextResponse.json({ success: false, message: "An error occurred" }, { status: 500 })
   }
 }

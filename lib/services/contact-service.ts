@@ -1,5 +1,4 @@
-import { getValidClient } from "../db/mongodb"
-import { ObjectId } from "mongodb"
+import { prisma } from "../db/prisma"
 
 export interface ContactFormData {
   name: string
@@ -17,8 +16,6 @@ export interface ContactFormResponse {
 
 export class ContactService {
   private static instance: ContactService
-  private dbName = "primo_fiscal"
-  private collectionName = "contact_submissions"
 
   private constructor() {}
 
@@ -31,26 +28,19 @@ export class ContactService {
 
   async saveContactSubmission(data: ContactFormData): Promise<ContactFormResponse> {
     try {
-      const client = await getValidClient()
-      const db = client.db(this.dbName)
-      const collection = db.collection(this.collectionName)
+      const submission = await prisma.contactSubmission.create({
+        data: {
+          name: data.name,
+          email: data.email,
+          phone: data.phone || "",
+          message: data.message,
+        },
+      })
 
-      // Add timestamp
-      const submissionData = {
-        ...data,
-        createdAt: new Date(),
-      }
-
-      const result = await collection.insertOne(submissionData)
-
-      if (result.acknowledged) {
-        return {
-          id: result.insertedId.toString(),
-          success: true,
-          message: "Contact form submitted successfully",
-        }
-      } else {
-        throw new Error("Failed to save contact submission")
+      return {
+        id: submission.id,
+        success: true,
+        message: "Contact form submitted successfully",
       }
     } catch (error) {
       console.error("Error saving contact submission:", error)
@@ -63,11 +53,11 @@ export class ContactService {
 
   async getContactSubmissions(): Promise<ContactFormData[]> {
     try {
-      const client = await getValidClient()
-      const db = client.db(this.dbName)
-      const collection = db.collection(this.collectionName)
-
-      const submissions = await collection.find({}).sort({ createdAt: -1 }).toArray()
+      const submissions = await prisma.contactSubmission.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
+      })
 
       return submissions as unknown as ContactFormData[]
     } catch (error) {
@@ -78,11 +68,9 @@ export class ContactService {
 
   async getContactSubmissionById(id: string): Promise<ContactFormData | null> {
     try {
-      const client = await getValidClient()
-      const db = client.db(this.dbName)
-      const collection = db.collection(this.collectionName)
-
-      const submission = await collection.findOne({ _id: new ObjectId(id) })
+      const submission = await prisma.contactSubmission.findUnique({
+        where: { id },
+      })
 
       return submission as unknown as ContactFormData
     } catch (error) {

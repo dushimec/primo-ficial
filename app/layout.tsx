@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   generator: 'primofiscal'
-} 
+}
 
 export default function RootLayout({
   children,
@@ -101,9 +101,7 @@ export default function RootLayout({
       <body className={inter.className} suppressHydrationWarning>
         <div className="flex flex-col min-h-screen">
           <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </div>
       </body>

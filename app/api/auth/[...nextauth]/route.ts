@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { compare } from "bcryptjs"
-import { getValidClient } from "@/lib/db/mongodb"
+import { prisma } from "@/lib/db/prisma"
 
 export const authOptions = {
   providers: [
@@ -17,9 +17,9 @@ export const authOptions = {
         }
 
         try {
-          const client = await getValidClient()
-          const db = client.db("primo_fiscal")
-          const user = await db.collection("users").findOne({ email: credentials.email })
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+          })
 
           if (!user) {
             return null
@@ -32,7 +32,7 @@ export const authOptions = {
           }
 
           return {
-            id: user._id.toString(),
+            id: user.id,
             email: user.email,
             name: user.name,
             role: user.role,

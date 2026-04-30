@@ -1,17 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getValidClient } from "@/lib/db/mongodb"
+import { prisma } from "@/lib/db/prisma"
 import emailService from "@/lib/services/email-service"
 import loggerService from "@/lib/services/logger-service"
-
-interface InternshipFormData {
-  fullName: string
-  email: string
-  phone: string
-  university: string
-  fieldOfStudy: string
-  motivationLetter: string
-  createdAt?: Date
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,49 +15,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: "All fields except phone are required" }, { status: 400 })
     }
 
-    // Create internship form data object
-    const internshipFormData: InternshipFormData = {
-      fullName,
-      email,
-      phone: phone || "",
-      university,
-      fieldOfStudy,
-      motivationLetter,
-      createdAt: new Date(),
-    }
-
-    // Log the incoming request
-    loggerService.info("Internship application received", { email })
-
-    // Save to database
-    const client = await getValidClient()
-    const db = client.db("primo_fiscal")
-    const collection = db.collection("internship_applications")
-
-    const result = await collection.insertOne(internshipFormData)
-
-    if (!result.acknowledged) {
-      loggerService.error("Failed to save internship application to database", { email })
-      return NextResponse.json({ success: false, message: "Failed to process your application" }, { status: 500 })
-    }
-
-    // Send email notification to admin
-    // Note: We're reusing the email service but would ideally create a specific template for internships
-    const emailResult = await emailService.sendContactNotification({
-      name: fullName,
-      email,
-      phone,
-      message: `
-        University/Institution: ${university}
-        Field of Study: ${fieldOfStudy}
-        
-        Motivation Letter:
-        ${motivationLetter}
-      `,
+    // Save to database using Prisma
+    const application = await prisma.trainingApplication.create({
+      data: {
+        fullName,
+        email,
+        phone: phone || "",
+        university,
+        fieldOfStudy,
+        motivationLetter,
+      },
     })
 
+    // Log the incoming request
+    loggerService.info("Training application received", { email, id: application.id })
+
+     // Send email notification to admin using specific training application template
+     const emailResult = await emailService.sendTrainingNotification({
+       fullName,
+       email,
+       phone,
+       university,
+       fieldOfStudy,
+       motivationLetter,
+     })
+
     if (!emailResult.success) {
-      loggerService.warn("Failed to send email notification for internship application", { email })
+      loggerService.warn("Failed to send email notification for training application", { email })
     }
 
     // Return success response
@@ -77,7 +51,7 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     // Log the error
-    loggerService.error("Error processing internship application", { error })
+    loggerService.error("Error processing training application", { error })
 
     // Return error response
     return NextResponse.json({ success: false, message: "An unexpected error occurred" }, { status: 500 })
@@ -89,15 +63,15 @@ export async function GET() {
   // In a real application, you would add authentication here
 
   try {
-    const client = await getValidClient()
-    const db = client.db("primo_fiscal")
-    const collection = db.collection("internship_applications")
-
-    const applications = await collection.find({}).sort({ createdAt: -1 }).toArray()
+    const applications = await prisma.trainingApplication.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    })
 
     return NextResponse.json({ success: true, data: applications })
   } catch (error) {
-    loggerService.error("Error fetching internship applications", { error })
-    return NextResponse.json({ success: false, message: "Failed to fetch internship applications" }, { status: 500 })
+    loggerService.error("Error fetching training applications", { error })
+    return NextResponse.json({ success: false, message: "Failed to fetch training applications" }, { status: 500 })
   }
 }

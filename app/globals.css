@@ -48,6 +48,22 @@ p {
   transition-delay: 300ms;
 }
 
+/* Mobile menu open state - blur page content */
+body.mobile-menu-open {
+  overflow: hidden;
+}
+
+body.mobile-menu-open main {
+  filter: blur(8px);
+  transition: filter 0.3s ease-in-out;
+}
+
+body.mobile-menu-open footer {
+  filter: blur(8px);
+  transition: filter 0.3s ease-in-out;
+  pointer-events: none;
+}
+
 .delay-400 {
   transition-delay: 400ms;
 }

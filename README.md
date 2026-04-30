@@ -70,4 +70,4 @@ The easiest way to deploy this application is using the [Vercel Platform](https:
 3. Add the required environment variables in the Vercel project settings
 4. Ensure you are using an up-to-date, patched version of `next` before deploying (Vercel may block vulnerable releases). Run `npm install` after updating `package.json`.
 5. Deploy
-# primo-ficial
+# primo-Fiscal

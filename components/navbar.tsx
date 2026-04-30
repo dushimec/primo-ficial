@@ -49,15 +49,18 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleClickOutside)
   }, [isMenuOpen])
 
-  // Prevent scrolling when mobile menu is open
+  // Prevent scrolling and blur page content when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden"
+      document.body.classList.add("mobile-menu-open")
     } else {
       document.body.style.overflow = "auto"
+      document.body.classList.remove("mobile-menu-open")
     }
     return () => {
       document.body.style.overflow = "auto"
+      document.body.classList.remove("mobile-menu-open")
     }
   }, [isMenuOpen])
 
@@ -78,9 +81,9 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
         scrolled
-          ? "bg-[#1e1b2e]/95 backdrop-blur-xl shadow-lg shadow-black/10 py-2"
-          : "bg-[#1e1b2e]/80 backdrop-blur-md py-4"
-      }`}
+          ? "bg-[#1e1b2e] shadow-lg shadow-black/10 py-2 md:bg-[#1e1b2e]/95 md:backdrop-blur-xl"
+          : "bg-[#1e1b2e] py-4 md:bg-[#1e1b2e]/80 md:backdrop-blur-md"
+      } md:backdrop-blur`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex justify-between items-center">
         {/* Logo Section */}
@@ -98,7 +101,7 @@ export default function Navbar() {
               />
             </div>
             <span className="ml-3 font-bold text-white text-sm sm:text-base tracking-tight">
-              Primo <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-400">Ficial</span>
+              Primo <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-400">Fiscal</span>
             </span>
           </Link>
         </div>
@@ -155,9 +158,17 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Backdrop overlay for mobile menu - blurs underlying content */}
+      <div
+        className={`fixed inset-0 bg-gradient-to-b from-orange-500/10 to-amber-500/10 backdrop-blur-sm z-40 transition-opacity duration-500 ease-in-out md:hidden ${
+          isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        aria-hidden="true"
+      />
+
       {/* Mobile Navigation */}
       <div
-        className={`fixed inset-0 bg-[#1e1b2e] z-40 transform transition-all duration-500 ease-in-out ${
+        className={`fixed inset-0 bg-[#1e1b2e]/95 z-50 transform transition-all duration-500 ease-in-out ${
           isMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
         } md:hidden`}
       >
@@ -178,7 +189,7 @@ export default function Navbar() {
               </div>
               <div className="ml-3">
                 <span className="text-lg font-bold text-white block">Primo</span>
-                <span className="text-sm text-orange-400">Ficial Partners</span>
+                <span className="text-sm text-orange-400">Fiscal Partners</span>
               </div>
             </div>
             <button
